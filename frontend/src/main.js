@@ -40,6 +40,22 @@ const setToken = (token) => {
     show("section-logged-in");
 };
 
+
+// create fake job
+document.getElementById("fake-job").addEventListener("click", () => {
+    const payload = {
+        "title": "COO for cupcake factory",
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+        "start": "2011-10-05T14:48:00.000Z",
+        "description": "Dedicated technical wizard with a passion and interest in human relationships"
+    }
+    apiCall("job", payload, (data) => {
+        console.log(data);
+    });
+});
+
+
+
 // if register button is clicked
 document.getElementById("register-btn").addEventListener("click", () => {
     const payload = {
@@ -92,11 +108,7 @@ document.getElementById("nav-login").addEventListener("click", () => {
     hide("register-page");
 });
 
-// if a token exists
-/* if (localStorage.getItem('token')) {
-    hide("section-logged-out");
-    show("section-logged-in");
-} */
+
 
 // logout button
 document.getElementById("logout").addEventListener("click", () => {
@@ -104,3 +116,10 @@ document.getElementById("logout").addEventListener("click", () => {
     show("section-logged-out");
     localStorage.removeItem("token");
 });
+
+// MAIN
+// if a token exists
+if (localStorage.getItem('token')) {
+    hide("section-logged-out");
+    show("section-logged-in");
+}
