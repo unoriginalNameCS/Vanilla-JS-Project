@@ -6,27 +6,48 @@
     <title>LurkForWork</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- You can add your styles and scripts here -->
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
     <!-- This is an example app structure, you can modify this as much as you choose --> 
     <header>
         <h1> Hi lurkforwork.com</h1>
         <nav>
-            <li class="nav-item">Item</li>
-            <li class="nav-item">Item</li>
+            <li class="nav-item" id="nav-register">Register</li>
+            <li class="nav-item" id="nav-login">Login</li>
         </nav>
     </header>
     <main role="main">
         <!-- app goes here --> 
-        Email: <input type="email" name="email" id="register-email" value="jkumar@email.com"> <br>
-        Password: <input type="password" name="password" id="register-password" value="password1234"> <br>
-        Name: <input type="text" name="first-name" id="register-first-name" value="Jeshnil"> <br>
-        <button id="register-btn">Register</button>
+        <div id="section-logged-in" class="hide">
+            Logged in bruh
+            <button id="fake-job">Create Fake Job</button>
+            <button id="logout">Logout</button>
+        </div>
+        <div id="section-logged-out">
+            <div id="register-page">
+                <div class="form-group">
+                    <label for="register-name">Name: </label><input type="text" class="form-control" id="register-name" value="Jeshnil"><br>
+                    <label for="register-email">Email: </label><input type="email" class="form-control" id="register-email" placeholder="Enter email" value="jkumar@email.com"><br>
+                    <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password" value="password1234"><br>
+                    <button id="register-btn" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+            <div>
+                <div id="login-page" class="hide">
+                    <div class="form-group"></div>
+                        <label for="login-email">Email: </label><input type="email" name="login-email" id="login-email" value="jkumar@email.com"><br>
+                        <label for="login-password">Password: </label><input type="password" name="login-password" id="login-password" value="password1234"><br>
+                        <button id="login-btn">Login</button>
+                    </div>
+                </div>
+        </div>
     </main>
     <footer>
         <p>&copy; lurkforwork.com 2022</p>
     </footer>
     <script type="module" src="src/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
