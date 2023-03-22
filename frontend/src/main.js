@@ -26,7 +26,7 @@ const apiCall = (path, payload, success) => {
                         alert(data.error);
                     } else {
                         if (success) {
-                            success(data);    
+                            success(data);
                         }
                     }
                 });
@@ -62,6 +62,13 @@ document.getElementById("register-btn").addEventListener("click", () => {
         email: document.getElementById("register-email").value,
         password: document.getElementById("register-password").value,
         name: document.getElementById("register-name").value,
+    }
+
+    // check if confirmed password and password are the same
+    const confirmed_password = document.getElementById("register-confirm-password").value;
+    if (confirmed_password != payload.password) {
+        return alert("Passwords do not match");
+        
     }
 
     apiCall("auth/register", payload, (data) => {

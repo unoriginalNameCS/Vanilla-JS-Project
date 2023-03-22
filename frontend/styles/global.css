@@ -13,3 +13,9 @@ html, body {
 .nav-item:hover {
     cursor: pointer;
 }
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+  }

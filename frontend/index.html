@@ -22,6 +22,8 @@
         <!-- app goes here --> 
         <div id="section-logged-in" class="hide">
             Logged in bruh
+            <div id="feed-items">
+            </div>
             <button id="fake-job">Create Fake Job</button>
             <button id="logout">Logout</button>
         </div>
@@ -31,7 +33,12 @@
                     <label for="register-name">Name: </label><input type="text" class="form-control" id="register-name" value="Jeshnil"><br>
                     <label for="register-email">Email: </label><input type="email" class="form-control" id="register-email" placeholder="Enter email" value="jkumar@email.com"><br>
                     <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password" value="password1234"><br>
+                    <label for="register-confirm-password">Confirm Password: </label><input type="password" class="form-control" id="register-confirm-password" value="password1234"><br>
                     <button id="register-btn" class="btn btn-primary">Register</button>
+                    <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+                      </div>
                 </div>
             </div>
             <div>
