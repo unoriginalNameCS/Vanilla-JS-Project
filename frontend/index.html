@@ -35,11 +35,12 @@
                     <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password" value="password1234"><br>
                     <label for="register-confirm-password">Confirm Password: </label><input type="password" class="form-control" id="register-confirm-password" value="password1234"><br>
                     <button id="register-btn" class="btn btn-primary">Register</button>
-                    <div class="alert">
-                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
-                      </div>
-                </div>
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> A problem has been occurred while submitting your data.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+            </div>
+                
             </div>
             <div>
                 <div id="login-page" class="hide">
