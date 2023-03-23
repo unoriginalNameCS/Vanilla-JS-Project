@@ -4,6 +4,32 @@ import { fileToDataUrl } from './helpers.js';
 
 console.log('Let\'s go!');
 
+const showErrorMessage = (message) => {
+    document.getElementById("error-popup-wrapper").classList.remove("hide");
+    const er = document.getElementById("error-popup");
+    const textNode = document.createTextNode(message);
+    er.appendChild(textNode);
+}
+
+const cloneShowErrorMessage = (message, element) => {
+    // removed the hide class and id of the cloned node
+    // for each child node, remove the id
+    const err = document.getElementById("error-popup-wrapper").cloneNode(true);
+    err.removeAttribute('id');
+    err.classList.remove();
+
+    err.childNodes.forEach(node => {
+        console.log(node);
+    });
+    const textNode = document.createTextNode(message);
+    err.appendChild(textNode);
+    console.log(err);
+
+    const matches = document.querySelectorAll("p");
+
+    //element.appendChild(err);
+}
+
 const apiCall = (path, payload, success) => {
     const options = {
         method: 'POST',
@@ -24,6 +50,8 @@ const apiCall = (path, payload, success) => {
                     if (data.error) {
                         // give a better error message
                         alert(data.error);
+                        //showErrorMessage(data.error);
+                        cloneShowErrorMessage(data.error);
                     } else {
                         if (success) {
                             success(data);
@@ -64,17 +92,17 @@ document.getElementById("register-btn").addEventListener("click", () => {
         name: document.getElementById("register-name").value,
     }
 
+    
     // check if confirmed password and password are the same
     const confirmed_password = document.getElementById("register-confirm-password").value;
     if (confirmed_password != payload.password) {
-        return alert("Passwords do not match");
-        
+        showErrorMessage("Password's don't match, try again");
+        return;
     }
 
     apiCall("auth/register", payload, (data) => {
         setToken(data.token);
     });
-    console.log(payload.email, payload.password, payload.name);
 
 });
 
@@ -88,10 +116,9 @@ document.getElementById("login-btn").addEventListener("click", () => {
     apiCall('auth/login', payload, (data) => {
         console.log("Successfully logged in", data);
         setToken(data.token);
+        hide("section-logged-out");
+        show("section-logged-in");
     });
-    console.log("Bro, Login details: ", payload.email, payload.password);
-    hide("section-logged-out");
-    show("section-logged-in");
 });
 
 const show = (element) => {
@@ -115,6 +142,13 @@ document.getElementById("nav-login").addEventListener("click", () => {
     hide("register-page");
 });
 
+// if modal form "watch" is clicked
+document.getElementById("water-user-submit").addEventListener("click", () => {
+    // get the email entered
+    const email = document.getElementById("watch-user-email").value;
+    // now just package it up and send it in an api
+    console.log(email);
+})
 
 
 // logout button

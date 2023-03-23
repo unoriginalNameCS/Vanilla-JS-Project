@@ -20,12 +20,36 @@
     </header>
     <main role="main">
         <!-- app goes here --> 
+        <!-- Logged in section-->
         <div id="section-logged-in" class="hide">
-            Logged in bruh
-            <div id="feed-items">
+            <!-- Watch user button -->
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">
+            Watch a user</button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="watch-user-modal" tabindex="-1" aria-labelledby="watch-user-modal-label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="watch-user-modal-label">Watch a user via email</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <label for="water-user-email">Enter an email:</label> <input type="email" id="watch-user-email">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="water-user-submit" type="button" class="btn btn-primary">Watch</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button id="fake-job">Create Fake Job</button>
-            <button id="logout">Logout</button>
+            Logged in bruh
+        <div id="feed-items">
+        </div>
+        <button id="fake-job">Create Fake Job</button>
+        <button id="logout">Logout</button>
         </div>
         <div id="section-logged-out">
             <div id="register-page">
@@ -35,12 +59,8 @@
                     <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password" value="password1234"><br>
                     <label for="register-confirm-password">Confirm Password: </label><input type="password" class="form-control" id="register-confirm-password" value="password1234"><br>
                     <button id="register-btn" class="btn btn-primary">Register</button>
-                    <div class="alert alert-danger alert-dismissible fade show">
-                        <strong>Error!</strong> A problem has been occurred while submitting your data.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-            </div>
-                
+                    <div id="error-popup-wrapper" class="hide"><div id="error-popup" class="alert alert-danger alert-dismissible fade show"><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>
+                </div>
             </div>
             <div>
                 <div id="login-page" class="hide">
@@ -49,7 +69,7 @@
                         <label for="login-password">Password: </label><input type="password" name="login-password" id="login-password" value="password1234"><br>
                         <button id="login-btn">Login</button>
                     </div>
-                </div>
+            </div>
         </div>
     </main>
     <footer>
