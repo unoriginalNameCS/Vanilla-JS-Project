@@ -4,38 +4,36 @@ import { fileToDataUrl } from './helpers.js';
 
 console.log('Let\'s go!');
 
-const showErrorMessage = (message) => {
-
-    if (document.getElementById("error-popup-wrapper").style.display === 'none') {
-        document.getElementById("error-popup-wrapper").classList.remove("hide");
-        const er = document.getElementById("error-popup");
-        const textNode = document.createTextNode(message);
-        er.appendChild(textNode);
-    } else {
-        document.getElementById("error-popup-wrapper").classList.add("hide");
-    }
-}
-
+/*
+    - message: the string to be displayed as the error message
+    - element: the page/div the error message/modal to be displayed on
+*/
 const cloneShowErrorMessage = (message, element) => {
-    // removed the hide class and id of the cloned node
-    // for each child node, remove the id
-    const err = document.getElementById("error-popup-wrapper").cloneNode(true);
+    // remove any modal before that has an error id
+    if (document.querySelectorAll("#error")) {
+        document.querySelectorAll("#error").forEach(element => {
+            element.removeAttribute("id");
+        });
+    }
+    const err = document.getElementById("error-modal").cloneNode(true);
     err.removeAttribute('id');
-    err.classList.remove();
-
-    err.childNodes.forEach(node => {
-        console.log(node);
-    });
+    err.setAttribute('id', "error")
     const textNode = document.createTextNode(message);
-    err.appendChild(textNode);
+    const modal_body = err.querySelector(".modal-body");
+    
+    modal_body.appendChild(textNode);
     console.log(err);
-
-    const matches = document.querySelectorAll("p");
-
-    //element.appendChild(err);
+    
+    // append to some div-page
+    const page = document.getElementById(element);
+    page.appendChild(err);
+    $("#error").modal("show");
+    return;
 }
 
-const apiCall = (path, method, payload, success) => {
+
+
+const apiCall = (path, method, payload, page, success) => {
     const options = {
         method: method,
         headers: {
@@ -55,8 +53,7 @@ const apiCall = (path, method, payload, success) => {
                     if (data.error) {
                         // give a better error message
                         alert(data.error);
-                        //showErrorMessage(data.error);
-                        cloneShowErrorMessage(data.error);
+                        cloneShowErrorMessage(data.error, page);
                     } else {
                         if (success) {
                             success(data);
@@ -82,7 +79,7 @@ document.getElementById("fake-job").addEventListener("click", () => {
         "start": "2011-10-05T14:48:00.000Z",
         "description": "Dedicated technical wizard with a passion and interest in human relationships"
     }
-    apiCall("job", "POST", payload, (data) => {
+    apiCall("job", "POST", payload, "section-logged-in", (data) => {
         console.log(data);
     });
 });
@@ -97,15 +94,14 @@ document.getElementById("register-btn").addEventListener("click", () => {
         name: document.getElementById("register-name").value,
     }
 
-    
     // check if confirmed password and password are the same
     const confirmed_password = document.getElementById("register-confirm-password").value;
     if (confirmed_password != payload.password) {
-        showErrorMessage("Password's don't match, try again");
+        cloneShowErrorMessage("Password's don't match, try again", "register-page");
         return;
     }
 
-    apiCall("auth/register", "POST", payload, (data) => {
+    apiCall("auth/register", "POST", payload, "register-page", (data) => {
         setToken(data.token);
     });
 
@@ -118,7 +114,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
         email: document.getElementById("login-email").value,
         password: document.getElementById("login-password").value,
     }
-    apiCall('auth/login', "POST", payload, (data) => {
+    apiCall('auth/login', "POST", payload, "login-page", (data) => {
         console.log("Successfully logged in", data);
         setToken(data.token);
         hide("section-logged-out");
@@ -161,7 +157,6 @@ document.getElementById("water-user-submit").addEventListener("click", () => {
         console.log(data);
     })
     
-
 })
 
 
