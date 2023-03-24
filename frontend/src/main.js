@@ -5,10 +5,15 @@ import { fileToDataUrl } from './helpers.js';
 console.log('Let\'s go!');
 
 const showErrorMessage = (message) => {
-    document.getElementById("error-popup-wrapper").classList.remove("hide");
-    const er = document.getElementById("error-popup");
-    const textNode = document.createTextNode(message);
-    er.appendChild(textNode);
+
+    if (document.getElementById("error-popup-wrapper").style.display === 'none') {
+        document.getElementById("error-popup-wrapper").classList.remove("hide");
+        const er = document.getElementById("error-popup");
+        const textNode = document.createTextNode(message);
+        er.appendChild(textNode);
+    } else {
+        document.getElementById("error-popup-wrapper").classList.add("hide");
+    }
 }
 
 const cloneShowErrorMessage = (message, element) => {
@@ -30,9 +35,9 @@ const cloneShowErrorMessage = (message, element) => {
     //element.appendChild(err);
 }
 
-const apiCall = (path, payload, success) => {
+const apiCall = (path, method, payload, success) => {
     const options = {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-type': 'application/json',
         },
@@ -77,7 +82,7 @@ document.getElementById("fake-job").addEventListener("click", () => {
         "start": "2011-10-05T14:48:00.000Z",
         "description": "Dedicated technical wizard with a passion and interest in human relationships"
     }
-    apiCall("job", payload, (data) => {
+    apiCall("job", "POST", payload, (data) => {
         console.log(data);
     });
 });
@@ -100,7 +105,7 @@ document.getElementById("register-btn").addEventListener("click", () => {
         return;
     }
 
-    apiCall("auth/register", payload, (data) => {
+    apiCall("auth/register", "POST", payload, (data) => {
         setToken(data.token);
     });
 
@@ -113,7 +118,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
         email: document.getElementById("login-email").value,
         password: document.getElementById("login-password").value,
     }
-    apiCall('auth/login', payload, (data) => {
+    apiCall('auth/login', "POST", payload, (data) => {
         console.log("Successfully logged in", data);
         setToken(data.token);
         hide("section-logged-out");
@@ -147,7 +152,16 @@ document.getElementById("water-user-submit").addEventListener("click", () => {
     // get the email entered
     const email = document.getElementById("watch-user-email").value;
     // now just package it up and send it in an api
-    console.log(email);
+    const payload = {
+        "email": email,
+        "turnon": true,
+    }
+
+    apiCall("user/watch", "PUT", payload, (data) => {
+        console.log(data);
+    })
+    
+
 })
 
 
@@ -157,6 +171,7 @@ document.getElementById("logout").addEventListener("click", () => {
     show("section-logged-out");
     localStorage.removeItem("token");
 });
+
 
 // MAIN
 // if a token exists
