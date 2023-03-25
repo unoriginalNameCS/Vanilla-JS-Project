@@ -41,7 +41,12 @@ const apiCall = (path, method, payload, page, success) => {
         headers: {
             'Content-type': 'application/json',
         },
-        body: JSON.stringify(payload),
+    }
+
+    if (method === "GET") {
+        console.log("Get method")
+    } else {
+        options.body = JSON.stringify(payload)
     }
 
     if (localStorage.getItem('token')) {
@@ -120,6 +125,8 @@ document.getElementById("login-btn").addEventListener("click", () => {
         setToken(data.token);
         hide("section-logged-out");
         show("section-logged-in");
+        // store the user id in local-storage
+        localStorage.setItem("userid", data.userId);
     });
 });
 
@@ -158,6 +165,15 @@ document.getElementById("watch-user-submit").addEventListener("click", () => {
     })
     
 })
+
+// view my profile
+document.getElementById("my-profile").addEventListener("click", () => {
+    // get userId from localStorage
+    const id = localStorage.getItem("userid");
+    // Now we can make the api call with the user id as one of the params
+    console.log("From down under, ", id);
+    
+});
 
 
 // logout button
