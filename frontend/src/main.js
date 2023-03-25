@@ -18,14 +18,16 @@ const cloneShowErrorMessage = (message, element) => {
     const err = document.getElementById("error-modal").cloneNode(true);
     err.removeAttribute('id');
     err.setAttribute('id', "error")
+    const div = document.createElement("div");
     const textNode = document.createTextNode(message);
+    div.appendChild(textNode);
+    div.classList.add("alert", "alert-danger");
     const modal_body = err.querySelector(".modal-body");
-    
-    modal_body.appendChild(textNode);
-    console.log(err);
-    
+    modal_body.appendChild(div);
+
     // append to some div-page
     const page = document.getElementById(element);
+    console.log(page);
     page.appendChild(err);
     $("#error").modal("show");
     return;
@@ -51,8 +53,7 @@ const apiCall = (path, method, payload, page, success) => {
             res.json()
                 .then((data) => {
                     if (data.error) {
-                        // give a better error message
-                        alert(data.error);
+                        // show the error message via a modal
                         cloneShowErrorMessage(data.error, page);
                     } else {
                         if (success) {
@@ -71,13 +72,13 @@ const setToken = (token) => {
 };
 
 
-// create fake job
-document.getElementById("fake-job").addEventListener("click", () => {
+// create job
+document.getElementById("create-job-submit").addEventListener("click", () => {
     const payload = {
-        "title": "COO for cupcake factory",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
-        "start": "2011-10-05T14:48:00.000Z",
-        "description": "Dedicated technical wizard with a passion and interest in human relationships"
+        "title": document.getElementById("create-job-title"),
+        "image": document.getElementById("create-job-image"),
+        "start": document.getElementById("create-job-start"),
+        "description": document.getElementById("create-job-desc"),
     }
     apiCall("job", "POST", payload, "section-logged-in", (data) => {
         console.log(data);
@@ -144,7 +145,7 @@ document.getElementById("nav-login").addEventListener("click", () => {
 });
 
 // if modal form "watch" is clicked
-document.getElementById("water-user-submit").addEventListener("click", () => {
+document.getElementById("watch-user-submit").addEventListener("click", () => {
     // get the email entered
     const email = document.getElementById("watch-user-email").value;
     // now just package it up and send it in an api
@@ -152,8 +153,7 @@ document.getElementById("water-user-submit").addEventListener("click", () => {
         "email": email,
         "turnon": true,
     }
-
-    apiCall("user/watch", "PUT", payload, (data) => {
+    apiCall("user/watch", "PUT", payload, "section-logged-in", (data) => {
         console.log(data);
     })
     

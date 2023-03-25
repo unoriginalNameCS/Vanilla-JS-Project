@@ -22,6 +22,8 @@
         <!-- app goes here --> 
         <!-- Logged in section-->
         <div id="section-logged-in" class="hide">
+            <button id="my-profile" class="btn btn-info">My Profile</button>
+            
             <!-- Watch user button -->
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">
@@ -40,7 +42,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button id="water-user-submit" type="button" class="btn btn-primary">Watch</button>
+                            <button id="watch-user-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal">Watch</button>
                         </div>
                     </div>
                 </div>
@@ -48,7 +50,32 @@
             Logged in bruh
         <div id="feed-items">
         </div>
-        <button id="fake-job">Create Fake Job</button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-job-modal">Create a job</button>
+            
+            <!-- Modal for create a job-->
+            <div class="modal fade" id="create-job-modal" tabindex="-1" aria-labelledby="create-job-modal-label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="create-job-label">Create job posting</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">Job Title: <input type="text" id="create-job-title"></li>
+                                <li class="list-group-item">Image: <input type="file" id="create-job-image"></li>
+                                <li class="list-group-item">Start: <input type="date" id="create-job-start"></li>
+                                <li class="list-group-item">Description: <input type="text" id="create-job-desc"></li>
+                              </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="create-job-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <button id="logout">Logout</button>
         </div>
         <div id="section-logged-out">
