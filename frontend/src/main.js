@@ -34,7 +34,13 @@ const cloneShowErrorMessage = (message, element) => {
 }
 
 
-
+/*  Function for making API calls
+    Params:
+    path - string to be appended onto end of url as the path in site
+    method - string of method to be executed e.g. "GET", "POST"
+    payload - the params within the request
+    success - function to be executed if request is successfully made
+*/
 const apiCall = (path, method, payload, page, success) => {
     const options = {
         method: method,
@@ -42,9 +48,11 @@ const apiCall = (path, method, payload, page, success) => {
             'Content-type': 'application/json',
         },
     }
-
+    
     if (method === "GET") {
         console.log("Get method")
+        path += '?' + ( new URLSearchParams( payload ) ).toString();
+        console.log("http://localhost:5005/" + path)
     } else {
         options.body = JSON.stringify(payload)
     }
@@ -69,22 +77,21 @@ const apiCall = (path, method, payload, page, success) => {
         });
 }
 
-
+// Stores token within localStorage
 const setToken = (token) => {
     localStorage.setItem('token', token);
-    hide("section-logged-out");
-    show("section-logged-in");
 };
 
 
 // create job
 document.getElementById("create-job-submit").addEventListener("click", () => {
     const payload = {
-        "title": document.getElementById("create-job-title"),
-        "image": document.getElementById("create-job-image"),
-        "start": document.getElementById("create-job-start"),
-        "description": document.getElementById("create-job-desc"),
+        title: document.getElementById("create-job-title").value,
+        image: document.getElementById("create-job-image").value,
+        start: document.getElementById("create-job-start").value,
+        description: document.getElementById("create-job-desc").value,
     }
+    console.log(payload);
     apiCall("job", "POST", payload, "section-logged-in", (data) => {
         console.log(data);
     });
@@ -172,8 +179,19 @@ document.getElementById("my-profile").addEventListener("click", () => {
     const id = localStorage.getItem("userid");
     // Now we can make the api call with the user id as one of the params
     console.log("From down under, ", id);
-    
+
+    const payload = {
+        userId: id,
+    }
+
+    apiCall("user", "GET", payload, "section-logged-in", (data) => {
+        console.log("we made it")
+        console.log(data);
+    })
 });
+
+
+
 
 
 // logout button
@@ -181,6 +199,7 @@ document.getElementById("logout").addEventListener("click", () => {
     hide("section-logged-in");
     show("section-logged-out");
     localStorage.removeItem("token");
+    localStorage.removeItem("userid");
 });
 
 
@@ -189,4 +208,5 @@ document.getElementById("logout").addEventListener("click", () => {
 if (localStorage.getItem('token')) {
     hide("section-logged-out");
     show("section-logged-in");
+    console.log(localStorage.getItem("token"));
 }
