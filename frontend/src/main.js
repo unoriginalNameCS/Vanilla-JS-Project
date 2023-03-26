@@ -128,19 +128,19 @@ document.getElementById("login-btn").addEventListener("click", () => {
         password: document.getElementById("login-password").value,
     }
     apiCall('auth/login', "POST", payload, "login-page", (data) => {
-        console.log("Successfully logged in", data);
         setToken(data.token);
         hide("section-logged-out");
         show("section-logged-in");
-        // store the user id in local-storage
         localStorage.setItem("userid", data.userId);
     });
 });
 
+// To show an element by removing the hide class
 const show = (element) => {
     document.getElementById(element).classList.remove("hide");
 }
 
+// To hide an element by adding the hide class
 const hide = (element) => {
     document.getElementById(element).classList.add("hide");
 }
@@ -160,9 +160,8 @@ document.getElementById("nav-login").addEventListener("click", () => {
 
 // if modal form "watch" is clicked
 document.getElementById("watch-user-submit").addEventListener("click", () => {
-    // get the email entered
+    // get the email entered within the modal
     const email = document.getElementById("watch-user-email").value;
-    // now just package it up and send it in an api
     const payload = {
         "email": email,
         "turnon": true,
@@ -174,24 +173,132 @@ document.getElementById("watch-user-submit").addEventListener("click", () => {
 })
 
 // view my profile
-document.getElementById("my-profile").addEventListener("click", () => {
+document.getElementById("my-profile-btn").addEventListener("click", () => {
     // get userId from localStorage
     const id = localStorage.getItem("userid");
     // Now we can make the api call with the user id as one of the params
-    console.log("From down under, ", id);
 
     const payload = {
         userId: id,
     }
 
-    apiCall("user", "GET", payload, "section-logged-in", (data) => {
-        console.log("we made it")
+    apiCall("user", "GET", payload, "own-profile", (data) => {
+        hide("home");
+        show("own-profile");
+        console.log(data);
+
+        if (document.querySelector("#profile-made")) {
+            console.log(document.querySelector("#profile-made"))
+            const element = document.querySelector("#profile-made");
+            element.innerText = '';
+            element.removeAttribute("id");
+        };
+        
+
+        if (!document.querySelector("#profile-made")) {
+            const page = document.getElementById("own-profile");
+            let ul = document.createElement("ul");
+            ul.classList.add("list-group");
+            ul.setAttribute("id", "profile-made")
+
+            // add name to page
+            let li = document.createElement("li");
+            li.classList.add("list-group-item")
+            let textNode = document.createTextNode(`Name: ${data.name}`)
+            li.appendChild(textNode);
+            ul.appendChild(li);
+
+            // add email to page
+            li = document.createElement("li");
+            li.classList.add("list-group-item")
+            textNode = document.createTextNode(`Email: ${data.email}`)
+            li.appendChild(textNode);
+            ul.appendChild(li);
+
+            // add User id
+            li = document.createElement("li");
+            li.classList.add("list-group-item")
+            textNode = document.createTextNode(`User ID: ${data.id}`)
+            li.appendChild(textNode);
+            ul.appendChild(li);
+
+            // the number of users who watch the logged in user
+            li = document.createElement("li");
+            li.classList.add("list-group-item")
+            textNode = document.createTextNode(`Number of users who watch me: ${data.watcheeUserIds.length}`)
+            li.appendChild(textNode);
+            ul.appendChild(li);
+
+
+            // Users who watch this profile, title of list
+            li = document.createElement("li");
+            li.classList.add("list-group-item")
+            textNode = document.createTextNode(`User IDs who watch me: `)
+            li.appendChild(textNode);
+            
+            // make list for list of users who watch user
+            let innerUL = document.createElement("ul");
+            innerUL.classList.add("list-group");
+            // Each user who watches logged in user
+            for (let i = 0; i < data.watcheeUserIds.length; i++) {
+                let innerLi = document.createElement("li");
+                innerLi.classList.add("list-group-item")
+                textNode = document.createTextNode(data.watcheeUserIds[i]);
+                innerLi.appendChild(textNode);
+                innerUL.appendChild(innerLi);
+            }
+            
+            li.appendChild(innerUL);
+            ul.appendChild(li);
+            
+            // Job list
+            li = document.createElement("li");
+            li.classList.add("list-group-item")
+            textNode = document.createTextNode(`Jobs: `)
+            li.appendChild(textNode);
+            
+            // make list for list of users who watch user
+            innerUL = document.createElement("ul");
+            innerUL.classList.add("list-group");
+            // Each user who watches logged in user
+            for (let i = 0; i < data.jobs.length; i++) {
+                let innerLi = document.createElement("li");
+                innerLi.classList.add("list-group-item")
+                textNode = document.createTextNode(`Job Title: ${data.jobs[i].title}`);
+                innerLi.appendChild(textNode);
+                innerUL.appendChild(innerLi);
+            }
+            
+            li.appendChild(innerUL);
+            ul.appendChild(li);
+
+
+            // add whole list to page
+            page.appendChild(ul);
+        }
+    })
+});
+
+// updating details
+document.getElementById("update-details-submit").addEventListener("click", () => {
+    const payload = {
+        name: document.getElementById("update-details-name").value,
+        email: document.getElementById("update-details-email").value,
+        password: document.getElementById("update-details-password").value,
+        image: document.getElementById("update-details-image").value,
+    }
+    apiCall("user", "PUT", payload, "own-profile", (data) => {
         console.log(data);
     })
 });
 
 
 
+// home button
+document.getElementById("home-btn").addEventListener("click", () => {
+    hide("own-profile");
+    show("home");
+});
 
 
 // logout button

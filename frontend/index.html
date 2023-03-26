@@ -21,22 +21,53 @@
             <nav>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
+                    <button type="button" class="btn btn-outline-primary" id="home-btn">Home</button>
+                </li>
+                <li class="nav-item">
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">Watch a user</button>
                 </li>
                 <li class="nav-item">
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#create-job-modal">Create a job</button>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="btn btn-outline-primary" id="my-profile">My Profile</button>
+                    <button type="button" class="btn btn-outline-primary" id="my-profile-btn">My Profile</button>
+                </li>
+                    <button type="button" id="logout" class="btn btn-secondary">Logout</button>
                 </li>
               </ul>
             
-        </nav>
-            <!-- Watch user button -->
+            </nav>
+            <div id="home">
+                <h3>Home Feed</h3>
+                <div id="feed-items"></div>
+            </div>
+            <div id="own-profile" class="hide">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#update-profile-modal">Update Details</button>
+                <!-- Modal for create a job-->
+                <div class="modal fade" id="update-profile-modal" tabindex="-1" aria-labelledby="update-profile-label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="update-details-label">Update your details</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Name: <input type="text" id="update-details-name"></li>
+                                    <li class="list-group-item">Password: <input type="password" id="update-details-password"></li>
+                                    <li class="list-group-item">Email: <input type="email" id="update-details-email"></li>
+                                    <li class="list-group-item">Image: <input type="file" id="update-details-image"></li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                <button id="update-details-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Update">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Button trigger modal -->
-            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">
-            Watch a user</button> -->
-            
             <!-- Modal for watch a user-->
             <div class="modal fade" id="watch-user-modal" tabindex="-1" aria-labelledby="watch-user-modal-label" aria-hidden="true">
                 <div class="modal-dialog">
@@ -55,36 +86,30 @@
                     </div>
                 </div>
             </div>
-        
-        <div id="feed-items">
-        </div>
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-job-modal">Create a job</button> -->
-            
-        <!-- Modal for create a job-->
-        <div class="modal fade" id="create-job-modal" tabindex="-1" aria-labelledby="create-job-modal-label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="create-job-label">Create job posting</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">Job Title: <input type="text" id="create-job-title"></li>
-                            <li class="list-group-item">Image: <input type="file" id="create-job-image"></li>
-                            <li class="list-group-item">Start: <input type="date" id="create-job-start"></li>
-                            <li class="list-group-item">Description: <input type="text" id="create-job-desc"></li>
-                            </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        <button id="create-job-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Create">Create</button>
+                
+            <!-- Modal for create a job-->
+            <div class="modal fade" id="create-job-modal" tabindex="-1" aria-labelledby="create-job-modal-label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="create-job-label">Create job posting</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">Job Title: <input type="text" id="create-job-title"></li>
+                                <li class="list-group-item">Image: <input type="file" id="create-job-image"></li>
+                                <li class="list-group-item">Start: <input type="date" id="create-job-start"></li>
+                                <li class="list-group-item">Description: <input type="text" id="create-job-desc"></li>
+                                </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                            <button id="create-job-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Create">Create</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <button id="logout" class="btn btn-secondary">Logout</button>
         </div>
         <div id="section-logged-out">
             <nav>
@@ -92,7 +117,6 @@
                     <li class="nav-item" id="nav-register">
                         <button type="button" class="btn btn-outline-primary"  id="nav-register-btn">Register</button>
                     </li>
-                    <!-- <li class="nav-item" id="nav-register">Register</li> -->
                     <li class="nav-item" id="nav-login">
                         <button type="button" class="btn btn-outline-primary" id="nav-login-btn">Login</button>
                     </li>
