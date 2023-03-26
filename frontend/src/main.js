@@ -4,6 +4,16 @@ import { fileToDataUrl } from './helpers.js';
 
 console.log('Let\'s go!');
 
+// To show an element by removing the hide class
+const show = (element) => {
+    document.getElementById(element).classList.remove("hide");
+}
+
+// To hide an element by adding the hide class
+const hide = (element) => {
+    document.getElementById(element).classList.add("hide");
+}
+
 /*  Displays an error message
     - message: the string to be displayed as the error message
     - element: the page/div the error message/modal to be displayed on
@@ -159,16 +169,6 @@ document.getElementById("login-btn").addEventListener("click", () => {
     });
 });
 
-// To show an element by removing the hide class
-const show = (element) => {
-    document.getElementById(element).classList.remove("hide");
-}
-
-// To hide an element by adding the hide class
-const hide = (element) => {
-    document.getElementById(element).classList.add("hide");
-}
-
 
 // if we click on nav-register, we should hide the other div's and just show register
 document.getElementById("nav-register").addEventListener("click", () => {
@@ -320,6 +320,68 @@ document.getElementById("update-details-submit").addEventListener("click", () =>
 document.getElementById("home-btn").addEventListener("click", () => {
     hide("own-profile");
     show("home");
+    const payload = {
+        start: 0,
+    }
+    apiCall('job/feed', 'GET', payload, "home", (data) => {
+        console.log(data)
+        document.getElementById('feed-items').textContent = '';
+        const page = document.getElementById("feed-items");
+        const ul = document.createElement("ul");
+        ul.classList.add("list-group");
+        for (const feedItem of data) {
+            let li = document.createElement("li");
+            li.classList.add("list-group-item")
+
+            let innerUL = document.createElement("ul");
+            innerUL.classList.add("list-group")
+            
+            let textNode = document.createTextNode(`Job Title: ${feedItem.title}`);
+            let innerLi = document.createElement("li");
+            innerLi.classList.add("list-group-item")
+            innerLi.appendChild(textNode);
+            innerUL.appendChild(innerLi);
+
+            // Image
+            innerLi = document.createElement("li");
+            innerLi.classList.add("list-group-item")
+            let img = document.createElement("img");
+            img.setAttribute("src", feedItem.image);
+            img.setAttribute("alt", `image for ${feedItem.title}`)
+            innerLi.appendChild(img);
+            innerUL.appendChild(innerLi);
+
+            // Created at time
+            innerLi = document.createElement("li");
+            innerLi.classList.add("list-group-item")
+            textNode = document.createTextNode(`Created : ${feedItem.createdAt}`);
+            innerLi.appendChild(textNode);
+            innerUL.appendChild(innerLi);
+
+            // Description
+            innerLi = document.createElement("li");
+            innerLi.classList.add("list-group-item")
+            textNode = document.createTextNode(`Description: ${feedItem.description}`);
+            innerLi.appendChild(textNode);
+            
+            innerUL.appendChild(innerLi);
+            li.appendChild(innerUL);
+            ul.appendChild(li);
+
+            // Like Count and Comment Count
+            innerLi = document.createElement("li");
+            innerLi.classList.add("list-group-item")
+            textNode = document.createTextNode(`Likes: ${feedItem.likes.length}, Comments: ${feedItem.comments.length}`);
+            innerLi.appendChild(textNode);
+            innerUL.appendChild(innerLi);
+            
+
+            li.appendChild(innerUL);
+            ul.appendChild(li);
+
+      }
+      page.appendChild(ul);
+    });
 });
 
 
