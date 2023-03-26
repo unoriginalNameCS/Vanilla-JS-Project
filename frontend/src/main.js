@@ -27,7 +27,6 @@ const cloneShowErrorMessage = (message, element) => {
 
     // append to some div-page
     const page = document.getElementById(element);
-    console.log(page);
     page.appendChild(err);
     $("#error").modal("show");
 }
@@ -57,7 +56,6 @@ const cloneShowSuccessMessage = (message, element) => {
 
     // append to some div-page
     const page = document.getElementById(element);
-    console.log(page);
     page.appendChild(err);
     $("#error").modal("show");
 }
@@ -78,9 +76,7 @@ const apiCall = (path, method, payload, page, success) => {
     }
     
     if (method === "GET") {
-        console.log("Get method")
         path += '?' + ( new URLSearchParams( payload ) ).toString();
-        console.log("http://localhost:5005/" + path)
     } else {
         options.body = JSON.stringify(payload)
     }
@@ -119,9 +115,8 @@ document.getElementById("create-job-submit").addEventListener("click", () => {
         start: document.getElementById("create-job-start").value,
         description: document.getElementById("create-job-desc").value,
     }
-    console.log(payload);
     apiCall("job", "POST", payload, "section-logged-in", (data) => {
-        console.log(data);
+        cloneShowSuccessMessage("Successfully created a job", "section-logged-in")
     });
 });
 
@@ -196,7 +191,7 @@ document.getElementById("watch-user-submit").addEventListener("click", () => {
         "turnon": true,
     }
     apiCall("user/watch", "PUT", payload, "section-logged-in", (data) => {
-        console.log(data);
+        cloneShowSuccessMessage(`Started watching user with the email ${email}`, "section-logged-in")
     })
     
 })
@@ -214,10 +209,8 @@ document.getElementById("my-profile-btn").addEventListener("click", () => {
     apiCall("user", "GET", payload, "own-profile", (data) => {
         hide("home");
         show("own-profile");
-        console.log(data);
 
         if (document.querySelector("#profile-made")) {
-            console.log(document.querySelector("#profile-made"))
             const element = document.querySelector("#profile-made");
             element.innerText = '';
             element.removeAttribute("id");
@@ -317,7 +310,7 @@ document.getElementById("update-details-submit").addEventListener("click", () =>
         image: document.getElementById("update-details-image").value,
     }
     apiCall("user", "PUT", payload, "own-profile", (data) => {
-        console.log(data);
+        cloneShowSuccessMessage("Successfully updated your details, click the My Profile tab to see changes", "section-logged-in")
     })
 });
 
@@ -344,5 +337,4 @@ document.getElementById("logout").addEventListener("click", () => {
 if (localStorage.getItem('token')) {
     hide("section-logged-out");
     show("section-logged-in");
-    console.log(localStorage.getItem("token"));
 }
