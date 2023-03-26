@@ -4,7 +4,7 @@ import { fileToDataUrl } from './helpers.js';
 
 console.log('Let\'s go!');
 
-/*
+/*  Displays an error message
     - message: the string to be displayed as the error message
     - element: the page/div the error message/modal to be displayed on
 */
@@ -30,9 +30,37 @@ const cloneShowErrorMessage = (message, element) => {
     console.log(page);
     page.appendChild(err);
     $("#error").modal("show");
-    return;
 }
 
+// Displays a success message, reuses the error modal but makes adjustments
+const cloneShowSuccessMessage = (message, element) => {
+    if (document.querySelectorAll("#error")) {
+        document.querySelectorAll("#error").forEach(element => {
+            element.removeAttribute("id");
+        });
+    }
+    const err = document.getElementById("error-modal").cloneNode(true);
+    err.removeAttribute('id');
+    err.setAttribute('id', "error")
+
+    let title = err.querySelector("#error-modal-title")
+    let text = document.createTextNode("Success!")
+    title.innerText = "";
+    title.appendChild(text);
+
+    const div = document.createElement("div");
+    const textNode = document.createTextNode(message);
+    div.appendChild(textNode);
+    div.classList.add("alert", "alert-success");
+    const modal_body = err.querySelector(".modal-body");
+    modal_body.appendChild(div);
+
+    // append to some div-page
+    const page = document.getElementById(element);
+    console.log(page);
+    page.appendChild(err);
+    $("#error").modal("show");
+}
 
 /*  Function for making API calls
     Params:
@@ -116,6 +144,7 @@ document.getElementById("register-btn").addEventListener("click", () => {
 
     apiCall("auth/register", "POST", payload, "register-page", (data) => {
         setToken(data.token);
+        cloneShowSuccessMessage("Successfully registered email, try logging in", "register-page");
     });
 
 });
@@ -194,7 +223,7 @@ document.getElementById("my-profile-btn").addEventListener("click", () => {
             element.removeAttribute("id");
         };
         
-
+        // make the profile page
         if (!document.querySelector("#profile-made")) {
             const page = document.getElementById("own-profile");
             let ul = document.createElement("ul");

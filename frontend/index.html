@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-    <!-- This is an example app structure, you can modify this as much as you choose --> 
     <header>
         <h1>lurkforwork.com</h1>
     </header>
@@ -18,29 +17,30 @@
         <!-- app goes here --> 
         <!-- Logged in section-->
         <div id="section-logged-in" class="hide">
+            <!-- Navigation Bar-->
             <nav>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-primary" id="home-btn">Home</button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">Watch a user</button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#create-job-modal">Create a job</button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-primary" id="my-profile-btn">My Profile</button>
-                </li>
-                    <button type="button" id="logout" class="btn btn-secondary">Logout</button>
-                </li>
-              </ul>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" id="home-btn">Home</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#watch-user-modal">Watch a user</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#create-job-modal">Create a job</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-primary" id="my-profile-btn">My Profile</button>
+                    </li>
+                        <button type="button" id="logout" class="btn btn-secondary">Logout</button>
+                    </li>
+                </ul>
             
             </nav>
             <div id="home">
                 <h3>Home Feed</h3>
-                <div id="feed-items"></div>
-            </div>
+                <div id="feed-items"></div><!--#feed-items-->
+            </div><!--#home-->
             <div id="own-profile" class="hide">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#update-profile-modal">Update Details</button>
                 <!-- Modal for create a job-->
@@ -50,7 +50,7 @@
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="update-details-label">Update your details</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                            </div><!--.modal-header-->
                             <div class="modal-body">
                                 <ul class="list-group">
                                     <li class="list-group-item">Name: <input type="text" id="update-details-name"></li>
@@ -58,16 +58,15 @@
                                     <li class="list-group-item">Email: <input type="email" id="update-details-email"></li>
                                     <li class="list-group-item">Image: <input type="file" id="update-details-image"></li>
                                 </ul>
-                            </div>
+                            </div><!--.modal-body-->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                                 <button id="update-details-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Update">Update</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Button trigger modal -->
+                            </div><!--.modal-footer-->
+                        </div><!--.model-content-->
+                    </div><!--.modal-dialog-->
+                </div><!--#update-profile-modal-->
+            </div><!--#own-profile-->
             <!-- Modal for watch a user-->
             <div class="modal fade" id="watch-user-modal" tabindex="-1" aria-labelledby="watch-user-modal-label" aria-hidden="true">
                 <div class="modal-dialog">
@@ -75,17 +74,17 @@
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="watch-user-modal-label">Watch a user via email</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                        </div><!--.modal-header-->
                         <div class="modal-body">
                         <label for="water-user-email">Enter an email:</label> <input type="email" id="watch-user-email">
-                        </div>
+                        </div><!--.modal-body-->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                             <button id="watch-user-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Watch">Watch</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </div><!--.modal-footer-->
+                    </div><!--.modal-content-->
+                </div><!--.modal-dialog-->
+            </div><!--#watch-user-modal-->
                 
             <!-- Modal for create a job-->
             <div class="modal fade" id="create-job-modal" tabindex="-1" aria-labelledby="create-job-modal-label" aria-hidden="true">
@@ -94,7 +93,7 @@
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="create-job-label">Create job posting</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                        </div><!--.modal-header-->
                         <div class="modal-body">
                             <ul class="list-group">
                                 <li class="list-group-item">Job Title: <input type="text" id="create-job-title"></li>
@@ -102,15 +101,15 @@
                                 <li class="list-group-item">Start: <input type="date" id="create-job-start"></li>
                                 <li class="list-group-item">Description: <input type="text" id="create-job-desc"></li>
                                 </ul>
-                        </div>
+                        </div><!--.modal-body-->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                             <button id="create-job-submit" type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Create">Create</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </div><!--.modal-footer-->
+                    </div><!--.modal-content-->
+                </div><!--.modal-dialog-->
+            </div><!-- #create-job-modal-->
+        </div><!-- #section-logged-in-->
         <div id="section-logged-out">
             <nav>
                 <ul class="nav justify-content-center">
@@ -125,38 +124,38 @@
             <div id="register-page">
                 <h2>Registration Page</h2>
                 <div class="form-group">
-                    <label for="register-name">Name: </label><input type="text" class="form-control" id="register-name" value="Jeshnil"><br>
-                    <label for="register-email">Email: </label><input type="email" class="form-control" id="register-email" placeholder="Enter email" value="jkumar@email.com"><br>
-                    <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password" value="password1234"><br>
-                    <label for="register-confirm-password">Confirm Password: </label><input type="password" class="form-control" id="register-confirm-password" value="password1234"><br>
+                    <label for="register-name">Name: </label><input type="text" class="form-control" id="register-name"><br>
+                    <label for="register-email">Email: </label><input type="email" class="form-control" id="register-email" placeholder="Enter email"><br>
+                    <label for="register-password">Password: </label><input type="password" class="form-control" id="register-password"><br>
+                    <label for="register-confirm-password">Confirm Password: </label><input type="password" class="form-control" id="register-confirm-password"><br>
                     <button id="register-btn" class="btn btn-primary">Register</button>
-                </div>
+                </div><!--.form-group-->
                 <div class="modal fade" id="error-modal" tabindex="-1" aria-labelledby="error-modal-label" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="error-modal-title">Error</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                            </div><!--.modal-header-->
                             <div class="modal-body">
-                            </div>
+                            </div><!--.modal-body-->
                             <div class="modal-footer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </div><!--modal-footer-->
+                        </div><!--.modal-content-->
+                    </div><!--.modal-dialog-->
+                </div><!--error-modal-->
+            </div><!--#register-page-->
             <div>
                 <div id="login-page" class="hide">
                     <div class="form-group">
                         <h2>Login Page</h2>
-                        <label for="login-email">Email: </label><input type="email" class="form-control" id="login-email" value="jkumar@email.com"><br>
-                        <label for="login-password">Password: </label><input type="password" class="form-control" id="login-password" value="password1234"><br>
+                        <label for="login-email">Email: </label><input type="email" class="form-control" id="login-email"><br>
+                        <label for="login-password">Password: </label><input type="password" class="form-control" id="login-password"><br>
                         <button id="login-btn" class="btn btn-primary">Login</button>
-                    </div> 
-                </div>
+                    </div> <!--.form-class-->
+                </div><!--#login-page-->
             </div>
-        </div>
+        </div><!--#section-logged-out-->
     </main>
     <footer>
         <p>&copy; lurkforwork.com 2022</p>
